@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coffeeshopapp.R
-import com.example.coffeeshopapp.adapter.ProductAdapter
+import com.example.coffeeshopapp.support.ProductAdapter
 import com.example.coffeeshopapp.view_model.customer.ProductViewModel
 
 class ProductsFragment : Fragment() {
@@ -21,22 +21,16 @@ class ProductsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        /*
-        argument? property inherited from fragment class, let {} block only execute if arguments is NOT NULL
-         */
+
         arguments?.let {
             category = it.getString("category")
         }
     }
-
     override fun onCreateView(
         //Inflate the fragment onto the view
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_display_products, container, false)
     }
-    /*
-    Initialise the view hierarchy by calling the methods
-     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -44,16 +38,12 @@ class ProductsFragment : Fragment() {
         setupRecyclerView(view)
         observeViewModel()
     }
-    /*
-    Set up Recycler view, position the item views within RecyclerView, bind data to views from the custom adapter
-     */
     private fun setupRecyclerView(view: View) {
         recyclerView = view.findViewById(R.id.productsRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
         productAdapter = ProductAdapter(listOf()) //
         recyclerView.adapter = productAdapter
     }
-
     private fun observeViewModel() {
         productViewModel.products.observe(viewLifecycleOwner) { products ->
 
@@ -62,7 +52,6 @@ class ProductsFragment : Fragment() {
         }
         productViewModel.loadProductsByCategory(category)
     }
-
     companion object {
         fun newInstance(category: String) = ProductsFragment().apply {
             arguments = Bundle().apply {

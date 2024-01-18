@@ -16,6 +16,8 @@ class CustomerMenu : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnHotDrinks.setOnClickListener { replaceFragment(ProductsFragment.newInstance("hot_drinks")) }
+        binding.btnColdDrinks.setOnClickListener { replaceFragment(ProductsFragment.newInstance("cold_drinks")) }
+        binding.btnCakes.setOnClickListener { replaceFragment(ProductsFragment.newInstance("cakes")) }
     }
 
     private fun replaceFragment(fragment: Fragment) {

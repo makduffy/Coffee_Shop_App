@@ -1,4 +1,4 @@
-package com.example.coffeeshopapp.adapter
+package com.example.coffeeshopapp.support
 
 import android.view.LayoutInflater
 import android.view.View
@@ -14,10 +14,12 @@ class ProductAdapter(private var productList: List<Product>) : RecyclerView.Adap
     class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val nameTextView: TextView = itemView.findViewById(R.id.productName)
         private val descriptionTextView: TextView = itemView.findViewById(R.id.productDescription)
+        private val priceTextView: TextView = itemView.findViewById(R.id.productPrice)
 
         fun bind(product: Product) {
             nameTextView.text = product.name
             descriptionTextView.text = product.description
+            priceTextView.text = String.format("£%.2f", product.price)
         }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
