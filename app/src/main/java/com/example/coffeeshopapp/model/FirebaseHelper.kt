@@ -47,4 +47,16 @@ class FirebaseHelper {
         })
     }
 
+    fun getProductById(productId: String, callback: (Product?) -> Unit) {
+        val productRef = database.getReference("product").child(productId)
+        productRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val product = snapshot.getValue(Product::class.java)
+                callback(product)
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+            }
+        })
+    }
+
 }
