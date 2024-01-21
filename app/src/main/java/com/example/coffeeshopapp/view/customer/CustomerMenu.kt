@@ -1,5 +1,6 @@
 package com.example.coffeeshopapp.view.customer
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -22,6 +23,13 @@ class CustomerMenu : AppCompatActivity() {
 
         categoryButtons()
         setupRecyclerView()
+
+        binding.btnCart.setOnClickListener {
+            startActivity(Intent(this, CustomerViewCart::class.java))
+        }
+        binding.btnMenu.setOnClickListener {
+            startActivity(Intent(this, CustomerMenu::class.java))
+        }
 
     }
     private fun setupRecyclerView() {
