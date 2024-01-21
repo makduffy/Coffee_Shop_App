@@ -1,6 +1,5 @@
 package com.example.coffeeshopapp.model
 data class Customer(
-    var id: String,
     var name: String? = null,
     var password: String? = null,
     var email: String? = null,

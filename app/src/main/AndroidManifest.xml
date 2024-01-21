@@ -46,7 +46,7 @@
             android:name= ".view.customer.CustomerSignIn"
             android:exported="false" />
         <activity
-            android:name=".view.customer.MainActivity"
+            android:name=".view.customer.CustomerMenu"
             android:exported="false"/>
         <activity
             android:name=".view.customer.CustomerSignUp"/>
@@ -55,9 +55,10 @@
         <activity
             android:name=".view.customer.CustomerViewCart"/>
         <activity android:name=".view.customer.SelectedProductActivity"/>
+        <activity android:name=".view.customer.CustomerAccount"/>
 
         <activity
-            android:name=".view.customer.CustomerMenu"
+            android:name=".view.customer.MainActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -30,6 +30,9 @@ class CustomerMenu : AppCompatActivity() {
         binding.btnMenu.setOnClickListener {
             startActivity(Intent(this, CustomerMenu::class.java))
         }
+        binding.btnProfile.setOnClickListener {
+            startActivity(Intent(this, CustomerAccount::class.java))
+        }
 
     }
     private fun setupRecyclerView() {

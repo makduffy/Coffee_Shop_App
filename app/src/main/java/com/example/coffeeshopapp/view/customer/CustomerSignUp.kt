@@ -21,6 +21,8 @@ class CustomerSignUp : AppCompatActivity() {
         binding = ActivityCustomerSignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        auth = FirebaseAuth.getInstance()
+
         binding.btnUserSignUp.setOnClickListener {
             val userName = binding.userName.text.toString()
             val userEmail = binding.userEmail.text.toString()
