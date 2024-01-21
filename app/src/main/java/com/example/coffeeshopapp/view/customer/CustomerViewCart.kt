@@ -25,6 +25,10 @@ class CustomerViewCart : AppCompatActivity() {
         binding.btnReturnToMenu.setOnClickListener {
             startActivity(Intent(this, CustomerMenu::class.java))
         }
+
+        binding.btnPayment.setOnClickListener {
+            startActivity(Intent(this, CustomerCheckout::class.java))
+        }
     }
 
     private fun setupRecyclerView() {
