@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/greySection"
         android:layout_width="410dp"
@@ -92,8 +91,9 @@
         app:layout_constraintTop_toBottomOf="@id/greySection"
         app:layout_constraintVertical_bias="1.0">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragmentContainer"
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/productsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 

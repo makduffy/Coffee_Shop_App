@@ -51,9 +51,11 @@
         <activity
             android:name=".view.customer.CustomerSignUp"/>
         <activity
-            android:name=".view.customer.ProductsFragment"/>
-        <activity android:name=".view.customer.SelectedProductActivity">
-        </activity>
+            android:name=".view.customer.CustomerCheckout"/>
+        <activity
+            android:name=".view.customer.CustomerViewCart"/>
+        <activity android:name=".view.customer.SelectedProductActivity"/>
+
         <activity
             android:name=".view.customer.CustomerMenu"
             android:exported="true" >

@@ -2,11 +2,8 @@ package com.example.coffeeshopapp.support
 
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.coffeeshopapp.R
 import com.example.coffeeshopapp.databinding.ProductLayoutBinding
 import com.example.coffeeshopapp.model.Product
 import com.example.coffeeshopapp.view.customer.SelectedProductActivity
@@ -22,7 +19,8 @@ class ProductAdapter(private var productList: List<Product>) : RecyclerView.Adap
         }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        val binding = ProductLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding = ProductLayoutBinding.inflate(layoutInflater, parent, false)
         return ProductViewHolder(binding)
     }
 
@@ -33,14 +31,14 @@ class ProductAdapter(private var productList: List<Product>) : RecyclerView.Adap
         holder.binding.cardView.setOnClickListener {
             val context = holder.itemView.context
             val intent = Intent(context, SelectedProductActivity::class.java).apply {
-                putExtra("product_id", product.id)
+                putExtra("productId", product.id)
             }
             context.startActivity(intent)
         }
     }
     override fun getItemCount() = productList.size
 
-    fun updateData(newProductList: List<Product>) {
+    fun updateProducts(newProductList: List<Product>) {
         productList = newProductList
         notifyDataSetChanged()
     }

@@ -4,23 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainer"
-        android:name="com.example.coffeeshopapp.view.customer.ToolbarFragment"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-
     <TextView
         android:id="@+id/productName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Product Name"
         android:textSize="24sp"
-        app:layout_constraintTop_toBottomOf="@+id/fragmentContainer"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -42,26 +32,17 @@
         app:layout_constraintStart_toStartOf="parent"/>
 
     <Button
-        android:id="@+id/btnAddToCart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add to Cart"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <Button
         android:id="@+id/btnDecreaseQuantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="-"
         app:layout_constraintTop_toBottomOf="@+id/productPrice"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/tvQuantity"
+        app:layout_constraintEnd_toStartOf="@+id/quantity"
         app:layout_constraintBottom_toTopOf="@+id/btnAddToCart"/>
 
     <TextView
-        android:id="@+id/tvQuantity"
+        android:id="@+id/quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1"
@@ -75,9 +56,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="+"
-        app:layout_constraintTop_toTopOf="@+id/tvQuantity"
-        app:layout_constraintBottom_toBottomOf="@+id/tvQuantity"
-        app:layout_constraintStart_toEndOf="@+id/tvQuantity"
+        app:layout_constraintTop_toTopOf="@+id/quantity"
+        app:layout_constraintBottom_toBottomOf="@+id/quantity"
+        app:layout_constraintStart_toEndOf="@+id/quantity"
         app:layout_constraintEnd_toEndOf="parent"/>
+
+    <Button
+        android:id="@+id/btnAddToCart"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Add to Cart"
+        app:layout_constraintTop_toBottomOf="@+id/productPrice"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnViewCart"/>
+
+    <Button
+        android:id="@+id/btnViewCart"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="View Cart"
+        app:layout_constraintTop_toBottomOf="@+id/btnAddToCart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnReturnToMenu"/>
+
+    <Button
+        android:id="@+id/btnReturnToMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Return to Menu"
+        app:layout_constraintTop_toBottomOf="@+id/btnViewCart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

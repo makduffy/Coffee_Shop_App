@@ -1,28 +1,47 @@
 package com.example.coffeeshopapp.view.customer
 
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import com.example.coffeeshopapp.R
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.coffeeshopapp.databinding.ActivityCustomerMenuBinding
+import com.example.coffeeshopapp.support.ProductAdapter
+import com.example.coffeeshopapp.view_model.customer.MenuProductsViewModel
 
 class CustomerMenu : AppCompatActivity() {
 
     private lateinit var binding: ActivityCustomerMenuBinding
+    private lateinit var productAdapter: ProductAdapter
+    private val menuModel = MenuProductsViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCustomerMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.btnHotDrinks.setOnClickListener { replaceFragment(ProductsFragment.newInstance("hot_drinks")) }
-        binding.btnColdDrinks.setOnClickListener { replaceFragment(ProductsFragment.newInstance("cold_drinks")) }
-        binding.btnCakes.setOnClickListener { replaceFragment(ProductsFragment.newInstance("cakes")) }
+        categoryButtons()
+        setupRecyclerView()
+
+    }
+    private fun setupRecyclerView() {
+        productAdapter = ProductAdapter(listOf())
+        binding.productsRecyclerView.apply {
+            layoutManager = LinearLayoutManager(this@CustomerMenu)
+            adapter = productAdapter
+        }
     }
 
-    private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, fragment)
-            .commit()
+    private fun categoryButtons() {
+        binding.btnHotDrinks.setOnClickListener { loadProducts("hot_drinks") }
+        binding.btnColdDrinks.setOnClickListener { loadProducts("cold_drinks") }
+        binding.btnCakes.setOnClickListener { loadProducts("cakes") }
     }
+
+    private fun loadProducts(category: String) {
+        menuModel.getProductsByCategory(category) { products ->
+            productAdapter.updateProducts(products)
+        }
+    }
+
 }

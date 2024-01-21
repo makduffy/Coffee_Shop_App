@@ -1,10 +1,12 @@
 package com.example.coffeeshopapp.model
 
+import java.util.Date
+
 data class Order(
-    val id: String,
-    val userId: String,
-    val items: List<CartItem>,
-    val orderTime: Long = System.currentTimeMillis(),
-    val totalAmount: Double,
-    val status: String
+    val orderId: String = "",
+    val customerId: String = "",
+    val items: List<CartItem> = emptyList(),
+    val orderDate: Date = Date(),
+    val totalAmount: Double = 0.0,
+    val status: String = "Processing"
 )

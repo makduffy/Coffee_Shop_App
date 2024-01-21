@@ -17,7 +17,6 @@ class AdminMasalaTea : AppCompatActivity() {
         }
     }
 
-    // This function invokes when the user presses the Increase button
     fun ButtonInc(view: View) {
 
         val counterMessageRef = findViewById<TextView>(R.id.textViewCounterDisplay)
@@ -27,7 +26,6 @@ class AdminMasalaTea : AppCompatActivity() {
             counterMessageRef.text = counterValue.toString()
         }
     }
-
     // This function invokes when the user presses the Decrease button
     fun ButtonDec(view: View) {
 
