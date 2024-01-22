@@ -1,44 +1,59 @@
 package com.example.coffeeshopapp.view_model.customer
 
-import android.util.Log
 import com.example.coffeeshopapp.model.CartItem
-import com.example.coffeeshopapp.model.customer.CartModel
+import com.example.coffeeshopapp.model.customer.MenuProductsModel
 
-class CartViewModel {
+class CartViewModel private constructor() {
 
-    private var cartModel = CartModel()
+    private val cartItems = mutableListOf<CartItem>()
+    private val menuProductsModel = MenuProductsModel()
+    companion object {
+        private var INSTANCE: CartViewModel? = null
 
-    fun getCartItems(callback: (List<CartItem>) -> Unit) {
-        cartModel.getCurrentCustomerId()?.let { userId ->
-            cartModel.getCart(userId, callback)
+        fun getInstance(): CartViewModel {
+            return INSTANCE ?: synchronized(this) {
+                INSTANCE ?: CartViewModel().also { INSTANCE = it }
+            }
         }
     }
-    fun deleteCartItem(cartItem: CartItem) {
-        val userId = cartModel.getCurrentCustomerId()
-        if (userId != null) {
-            cartModel.deleteCartItem(userId, cartItem)
-        }
-    }
-    private fun createNewCart(userId: String, cartItem: CartItem){
-        cartModel.createCart(userId, cartItem)
-    }
 
+    @Synchronized
+    fun getCartItems(): List<Pair<CartItem, Int>> {
+        return cartItems.map { Pair(it, it.quantity) }.toList()
+    }
+    @Synchronized
     fun addToCart(cartItem: CartItem) {
-        val userId = cartModel.getCurrentCustomerId()
-        if (userId != null) {
-            Log.d("CartViewModel", "Adding item to cart: $cartItem for user $userId")
-            cartModel.cartExists(userId) { exists ->
-                if (exists) {
-                    Log.d("CartViewModel", "Cart exists, adding item")
-                    cartModel.addToCustomerCart(userId, cartItem)
-                } else {
-                    Log.d("CartViewModel", "Cart does not exist, creating new cart")
-                    createNewCart(userId, cartItem)
+        cartItems.add(cartItem)
+    }
+    @Synchronized
+    fun deleteCartItem(cartItem: CartItem) {
+        cartItems.remove(cartItem)
+    }
+    @Synchronized
+    fun clearCart() {
+        cartItems.clear()
+    }
+    @Synchronized
+    fun getTotalPrice(callback: (Double) -> Unit) {
+        var totalPrice = 0.0
+        var itemsProcessed = 0
+
+        if (cartItems.isEmpty()) {
+            callback(totalPrice)
+            return
+        }
+
+        cartItems.forEach { cartItem ->
+            menuProductsModel.getProductById(cartItem.productId) { product ->
+                product?.let {
+                    totalPrice += it.price * cartItem.quantity
+                }
+                itemsProcessed++
+                if (itemsProcessed == cartItems.size) {
+                    callback(totalPrice)
                 }
             }
-        } else {
-            Log.d("CartViewModel", "User ID is null, cannot add to cart")
         }
     }
-
 }
+

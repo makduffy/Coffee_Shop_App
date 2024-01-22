@@ -1,66 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="Craze Cafe"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CoffeeShopApp"
         tools:targetApi="31">
+
         <activity
             android:name=".view.admin.AdminChocolateCake"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".view.admin.AdminButterCroissant"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".view.admin.AdminKarakCoffee"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".view.admin.AdminMasalaTea"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".view.admin.AdminEnglishTea"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".view.admin.AdminFeedback"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".view.admin.AdminOrders"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".view_model.admin.EditStock"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".view.admin.AdminMenuManagement"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".view.admin.AdminPanel"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name= ".view.customer.CustomerSignIn"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".view.customer.CustomerMenu"
-            android:exported="false"/>
+            android:exported="false"
+            android:theme="@style/AppTheme"/>
         <activity
-            android:name=".view.customer.CustomerSignUp"/>
+            android:name=".view.customer.CustomerSignUp"
+            android:theme="@style/AppTheme"/>
         <activity
-            android:name=".view.customer.CustomerCheckout"/>
+            android:name=".view.customer.CustomerCheckout"
+            android:theme="@style/AppTheme"/>
         <activity
-            android:name=".view.customer.CustomerOrderSubmitted"/>
+            android:name=".view.customer.CustomerOrderSubmitted"
+            android:theme="@style/AppTheme"/>
         <activity
-            android:name=".view.customer.CustomerViewCart"/>
-        <activity android:name=".view.customer.SelectedProductActivity"/>
-        <activity android:name=".view.customer.CustomerAccount"/>
+            android:name=".view.customer.CustomerViewCart"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".view.customer.SelectedProductActivity"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".view.customer.CustomerAccount"
+            android:theme="@style/AppTheme"/>
 
         <activity
             android:name=".view.customer.MainActivity"
+            android:theme="@style/AppTheme"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

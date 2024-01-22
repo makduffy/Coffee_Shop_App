@@ -7,6 +7,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.coffeeshopapp.R
 import com.example.coffeeshopapp.databinding.ActivityCustomerCheckoutBinding
+import com.example.coffeeshopapp.model.Payment
+import com.example.coffeeshopapp.model.customer.PaymentModel
 import com.example.coffeeshopapp.view_model.customer.CartViewModel
 import com.example.coffeeshopapp.view_model.customer.OrderViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -14,6 +16,8 @@ import com.google.firebase.auth.FirebaseAuth
 class CustomerCheckout : AppCompatActivity() {
     private lateinit var binding: ActivityCustomerCheckoutBinding
     private var orderViewModel = OrderViewModel()
+    private var paymentModel = PaymentModel()
+    private var cartViewModel = CartViewModel.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d("CustomerCheckout", "onCreate called")
@@ -21,42 +25,58 @@ class CustomerCheckout : AppCompatActivity() {
         binding = ActivityCustomerCheckoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        displayTotalPrice()
         binding.submitOrderButton.setOnClickListener {
             submitOrder()
         }
     }
 
     private fun submitOrder() {
-        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
         binding.submitOrderButton.isEnabled = false
         val name = binding.fullName.text.toString()
         val address = binding.address.text.toString()
         val paymentMethod = getPaymentMethod()
 
         if (validation(name, address, paymentMethod)) {
-            processOrder(userId, name, address, paymentMethod)
+            processOrder(name, paymentMethod)
         } else {
             binding.submitOrderButton.isEnabled = true
         }
     }
 
-
-    private fun processOrder(userId: String, name: String, address: String, paymentMethod: String) {
-        orderViewModel.convertCartToOrder(userId, name, address, paymentMethod) { success ->
-            if (success) {
-                runOnUiThread {
-                    val intent = Intent(this, CustomerOrderSubmitted::class.java)
-                    startActivity(intent)
-                }
-            } else {
-                runOnUiThread {
-                    Toast.makeText(this, "Order submission failed", Toast.LENGTH_SHORT).show()
-                    binding.submitOrderButton.isEnabled = true
+    private fun processOrder(name: String, paymentMethod: String) {
+        cartViewModel.getTotalPrice { totalPrice ->
+            orderViewModel.submitOrder(name) { orderId ->
+                if (orderId != null) {
+                    submitPaymentRecord(orderId, totalPrice, paymentMethod)
+                } else {
+                    runOnUiThread {
+                        Toast.makeText(this, "Order submission failed", Toast.LENGTH_SHORT).show()
+                        binding.submitOrderButton.isEnabled = true
+                    }
                 }
             }
         }
     }
 
+    private fun submitPaymentRecord(orderId: String, totalPrice: Double, paymentMethod: String) {
+        val payment = Payment(
+            orderId = orderId,
+            totalPrice = totalPrice,
+            paymentType = paymentMethod
+        )
+        paymentModel.submitPayment(payment) { success ->
+            runOnUiThread {
+                if (success) {
+                    startActivity(Intent(this, CustomerOrderSubmitted::class.java))
+                    cartViewModel.clearCart()
+                } else {
+                    Toast.makeText(this, "Payment submission failed", Toast.LENGTH_SHORT).show()
+                    binding.submitOrderButton.isEnabled = true
+                }
+            }
+        }
+    }
 
     private fun getPaymentMethod(): String {
         return when (binding.paymentMethod.checkedRadioButtonId) {
@@ -80,5 +100,13 @@ class CustomerCheckout : AppCompatActivity() {
             return false
         }
         return true
+    }
+
+    private fun displayTotalPrice() {
+        cartViewModel.getTotalPrice { totalPrice ->
+            runOnUiThread {
+                binding.totalPrice.text = "Total: $${String.format("%.2f", totalPrice)}"
+            }
         }
     }
+}

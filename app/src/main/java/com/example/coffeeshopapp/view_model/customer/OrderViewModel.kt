@@ -1,49 +1,52 @@
 package com.example.coffeeshopapp.view_model.customer
 
-import android.util.Log
 import com.example.coffeeshopapp.model.Order
-import com.example.coffeeshopapp.model.customer.CartModel
 import com.example.coffeeshopapp.model.customer.OrderModel
-
+import com.google.firebase.auth.FirebaseAuth
 
 class OrderViewModel {
 
     private var orderModel = OrderModel()
-    private var cartModel = CartModel()
+    private val cartViewModel = CartViewModel.getInstance()
+    private val firebaseAuth = FirebaseAuth.getInstance()
 
-    fun convertCartToOrder(
-        userId: String, customerName: String,
-        address: String, paymentMethod: String, callback: (Boolean) -> Unit) {
-        Log.d("OrderViewModel", "Starting to convert cart to order for user $userId")
-
-        if (customerName.isEmpty() || address.isEmpty() || paymentMethod.isEmpty()) {
-            Log.d("OrderViewModel", "Order conversion failed: Missing required fields")
-            callback(false)
+    fun submitOrder(
+        name: String,
+        callback: (String?) -> Unit
+    ) {
+        val userId = firebaseAuth.currentUser?.uid
+        if (userId == null || name.isEmpty() ) {
+            callback(null)
             return
         }
 
-        cartModel.getCart(userId) { cartItems ->
-            Log.d("OrderViewModel", "Retrieved cart items for order conversion: $cartItems")
-            val itemsMap = cartItems.associateBy { it.productId }
-            val order = Order(
-                customerId = userId,
-                items = itemsMap,
-                status = "pending",
-                paymentMethod = paymentMethod
-            )
-            orderModel.createOrder(order) { success ->
-                if (success) {
-                    Log.d("OrderViewModel", "Order created successfully")
-                    orderModel.clearCart(userId) { cartCleared ->
-                        Log.d("OrderViewModel", "Cart cleared after order creation: $cartCleared")
-                        callback(cartCleared)
-                        callback(cartCleared)
-                    }
-                } else {
-                    Log.d("OrderViewModel", "Failed to create order")
-                    callback(false)
-                }
+        val cartItems = cartViewModel.getCartItems()
+        if (cartItems.isEmpty()) {
+            callback(null)
+            return
+        }
+        val items = cartItems.map { it.first }
+        val itemsMap = items.associateBy { it.productId }
+        val order = Order(
+            customerId = userId,
+            items = itemsMap,
+            status = "pending",
+        )
+
+        orderModel.createOrder(order) { orderId ->
+            if (orderId != null) {
+                cartViewModel.clearCart()
+                callback(orderId)
+            } else {
+                callback(null)
             }
         }
     }
+
+    fun getOrder(callback: (List<Order>) -> Unit) {
+        val userId = firebaseAuth.currentUser?.uid ?: return
+        orderModel.getOrder(userId, callback)
+    }
 }
+
+

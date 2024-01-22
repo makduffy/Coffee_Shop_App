@@ -44,12 +44,23 @@
             android:text="Cash"/>
     </RadioGroup>
 
+    <TextView
+        android:id="@+id/totalPrice"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Total Price: $0.00"
+        android:textSize="18sp"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/paymentMethod"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <Button
         android:id="@+id/submitOrderButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Submit Order"
-        app:layout_constraintTop_toBottomOf="@id/paymentMethod"
+        app:layout_constraintTop_toBottomOf="@id/totalPrice"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 

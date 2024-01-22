@@ -6,11 +6,6 @@ class MenuProductsViewModel {
 
     private val menuModel = MenuProductsModel()
     private var productsCallback: ((List<Product>) -> Unit)? = null
-
-    fun setProductsCallback(callback: (List<Product>) -> Unit) {
-        this.productsCallback = callback
-    }
-
     fun getProductsByCategory(category: String, callback: (List<Product>) -> Unit) {
         menuModel.getProductsByCategory(category, callback)
     }
