@@ -1,5 +1,6 @@
 package com.example.coffeeshopapp.model.customer
 
+import android.util.Log
 import com.example.coffeeshopapp.model.CartItem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -21,8 +22,8 @@ class CartModel {
     }
 
     fun getCart(userId: String, callback: (List<CartItem>) -> Unit) {
-        val databaseRef = database.getReference("Cart/$userId")
-        databaseRef.addValueEventListener(object : ValueEventListener {
+        val productsRef = database.getReference("Cart/$userId/products")
+        productsRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val items = dataSnapshot.children.mapNotNull { it.getValue(CartItem::class.java) }
                 callback(items)
@@ -32,7 +33,8 @@ class CartModel {
         })
     }
     fun addToCustomerCart(userId: String, cartItem: CartItem) {
-        val databaseReference = database.getReference("Cart/$userId")
+        Log.d("CartModel", "Adding item to cart: $cartItem for user $userId")
+        val databaseReference = database.getReference("Cart/$userId/products")
         val cartItemKey = databaseReference.push().key
         cartItemKey?.let {
             databaseReference.child(it).setValue(cartItem)
@@ -43,4 +45,16 @@ class CartModel {
         val databaseReference = database.getReference("Cart/$userId/${cartItem.productId}")
         databaseReference.removeValue()
     }
+
+    fun cartExists(userId: String, callback: (Boolean) -> Unit) {
+        val databaseRef = database.getReference("Cart/$userId")
+        databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                callback(dataSnapshot.exists())
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+            }
+        })
+    }
+
 }

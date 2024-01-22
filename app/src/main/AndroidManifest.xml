@@ -53,6 +53,8 @@
         <activity
             android:name=".view.customer.CustomerCheckout"/>
         <activity
+            android:name=".view.customer.CustomerOrderSubmitted"/>
+        <activity
             android:name=".view.customer.CustomerViewCart"/>
         <activity android:name=".view.customer.SelectedProductActivity"/>
         <activity android:name=".view.customer.CustomerAccount"/>

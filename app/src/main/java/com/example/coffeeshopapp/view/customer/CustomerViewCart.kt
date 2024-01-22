@@ -2,6 +2,7 @@ package com.example.coffeeshopapp.view.customer
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.coffeeshopapp.databinding.ActivityCustomerCartBinding
@@ -15,20 +16,25 @@ class CustomerViewCart : AppCompatActivity() {
     private val cartViewModel = CartViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityCustomerCartBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        try{
+            super.onCreate(savedInstanceState)
+            binding = ActivityCustomerCartBinding.inflate(layoutInflater)
+            setContentView(binding.root)
 
-        setupRecyclerView()
-        loadCartItems()
+            setupRecyclerView()
+            loadCartItems()
 
-        binding.btnReturnToMenu.setOnClickListener {
-            startActivity(Intent(this, CustomerMenu::class.java))
+            binding.btnReturnToMenu.setOnClickListener {
+                startActivity(Intent(this, CustomerMenu::class.java))
+            }
+
+            binding.btnPayment.setOnClickListener {
+                startActivity(Intent(this, CustomerCheckout::class.java))
+            }
+        } catch (e: Exception) {
+            Log.e("CustomerViewCart", "CustomerViewCart activity couldn't run", e)
         }
 
-        binding.btnPayment.setOnClickListener {
-            startActivity(Intent(this, CustomerCheckout::class.java))
-        }
     }
 
     private fun setupRecyclerView() {
