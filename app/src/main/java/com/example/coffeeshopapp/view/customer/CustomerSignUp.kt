@@ -41,10 +41,10 @@ class CustomerSignUp : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    val userId = auth.currentUser?.uid ?: return@addOnCompleteListener
+                    val authId = auth.currentUser?.uid ?: return@addOnCompleteListener
                     database = FirebaseDatabase.getInstance().getReference("Customer")
-                    val customer = Customer(name, email, phone, password)
-                    database.child(userId).setValue(customer).addOnSuccessListener {
+                    val customer = Customer(authId, name, password, email, phone)
+                    database.child(authId).setValue(customer).addOnSuccessListener {
                         Toast.makeText(this, "Signed up successfully", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this, CustomerSignIn::class.java))
                         finish()

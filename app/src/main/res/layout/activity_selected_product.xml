@@ -69,6 +69,7 @@
         app:layout_constraintTop_toBottomOf="@+id/productPrice"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="160dp"
         app:layout_constraintBottom_toTopOf="@+id/btnViewCart"/>
 
     <Button
@@ -79,16 +80,63 @@
         app:layout_constraintTop_toBottomOf="@+id/btnAddToCart"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/btnReturnToMenu"/>
+        app:layout_constraintBottom_toTopOf="@+id/btnReturnToMenu"
+        android:padding="10dp"/>
 
     <Button
         android:id="@+id/btnReturnToMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Return to Menu"
+        android:text="Browse more products"
         app:layout_constraintTop_toBottomOf="@+id/btnViewCart"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottomMenu"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="@color/grey"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:id="@+id/navigation_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/btnCart"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="fitCenter"
+                android:layout_marginEnd="80dp"
+                android:src="@drawable/icon_cart"
+                android:contentDescription="navigation_cart" />
+
+            <ImageButton
+                android:id="@+id/btnMenu"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="fitCenter"
+                android:layout_marginEnd="80dp"
+                android:src="@drawable/icon_home"
+                android:contentDescription="navigation_home" />
+
+            <ImageButton
+                android:id="@+id/btnProfile"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/icon_profile"
+                android:contentDescription="navigation_profile" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

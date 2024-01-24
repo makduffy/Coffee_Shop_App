@@ -29,7 +29,8 @@ class CartItemAdapter(private var cartItemList: MutableList<CartItem>, private v
     override fun getItemCount() = cartItemList.size
 
     fun updateData(newCartItemList: MutableList<CartItem>) {
-        cartItemList = newCartItemList
+        cartItemList.clear()
+        cartItemList.addAll(newCartItemList)
         notifyDataSetChanged()
     }
     fun deleteItem(cartItem: CartItem) {
@@ -38,10 +39,6 @@ class CartItemAdapter(private var cartItemList: MutableList<CartItem>, private v
             cartItemList.removeAt(position)
             notifyItemRemoved(position)
         }
-    }
-
-    fun getItemAtPosition(position: Int): CartItem {
-        return cartItemList[position]
     }
 }
 
